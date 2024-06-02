@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
+// retrieves the text from the child that contains the given value, essentially
+// getting the string of the currently selected option
 export function getDisplayedValue(value, children) {
   const childArray = React.Children.toArray(children);
-  const selectedChild = childArray.find(
-    (child) => child.props.value === value
-  );
+  const selectedChild = childArray.find((child) => child.props.value === value);
 
   return selectedChild.props.children;
 }
