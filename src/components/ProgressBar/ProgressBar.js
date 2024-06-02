@@ -46,12 +46,14 @@ const ProgressBar = ({ value, size }) => {
   const clickCallback = useCallback(() => {
     setInternalValue(0);
     const id = setInterval(() => {
-      if (internalValue >= value) {
-        setInternalValue(value);
-        clearInterval(id);
-        return;
-      }
-      setInternalValue((internalValue) => internalValue + 1);
+      setInternalValue((internalValue) => {
+        if (internalValue >= value) {
+          clearInterval(id);
+          return value;
+        } else {
+          return internalValue + 1;
+        }
+      });
     }, 200);
   }, [internalValue, value, setInternalValue]);
 
@@ -74,7 +76,7 @@ const ProgressBar = ({ value, size }) => {
           ></BarInner>
         </RoundBorders>
       </BarWrapper>
-      <button onClick={clickCallback}>Animate!</button>
+      <button onClick={clickCallback}>Animate to current Value!</button>
     </>
   );
 };
