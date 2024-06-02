@@ -1,1 +1,1 @@
-export { default } from './IconInput';
+export { default } from "./IconInput";

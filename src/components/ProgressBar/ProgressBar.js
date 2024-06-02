@@ -54,7 +54,7 @@ const ProgressBar = ({ value, size }) => {
           return internalValue + 1;
         }
       });
-    }, 200);
+    }, 75);
   }, [internalValue, value, setInternalValue]);
 
   const fillPercent = (internalValue / 100) * 100;
