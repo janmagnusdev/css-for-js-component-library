@@ -14,8 +14,10 @@ const Select = ({ label, value, onChange, children }) => {
         {children}
       </NativeSelect>
       <DisplayedSelect>
-        {displayedValue}{" "}
-        <StyledIcon id="chevron-down" strokeWidth={2}></StyledIcon>
+        {displayedValue}
+        <IconWrapper style={{ "--size": 24 + "px" }}>
+          <Icon id={"chevron-down"} size={24} strokeWidth={2}></Icon>
+        </IconWrapper>{" "}
       </DisplayedSelect>
     </Wrapper>
   );
@@ -39,11 +41,20 @@ const NativeSelect = styled.select`
 `;
 
 // used for referencing in other styled components
-const StyledIcon = styled(Icon)`
-  display: inline-block;
-  position: relative;
+const IconWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 10px;
+  margin: auto;
+
   // make based on rem
-  top: ${(5 / 16) * 16}px;
+  width: var(--size);
+  height: var(--size);
+
+  // without this, the icon would be clickable, and the select would therefore not register
+  // a click event when the mouse is clicked in the area of the icon
+  pointer-events: none;
 `;
 
 const DisplayedSelect = styled.div`
@@ -61,6 +72,10 @@ const DisplayedSelect = styled.div`
   line-height: 30px;
 
   padding: 12px 16px;
+  // more padding on the right side to make space for icon
+  // icon sits in the space 52px right of the text
+  // learning: position absolute and provide more space originating from the parent element
+  padding-right: 52px;
 
   // & must come last, requiring a change in the DOM order
   ${NativeSelect}:focus + & {
@@ -70,15 +85,12 @@ const DisplayedSelect = styled.div`
   ${NativeSelect}:hover + & {
     color: ${COLORS.black};
   }
-
-  ${NativeSelect}:hover + & ${StyledIcon} {
-    color: ${COLORS.black};
-  }
 `;
 
 const Wrapper = styled.div`
   position: relative;
   width: max-content;
+  isolation: isolate;
 `;
 
 export default Select;
